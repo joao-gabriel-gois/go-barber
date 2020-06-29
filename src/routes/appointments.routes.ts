@@ -8,7 +8,7 @@ const appointmentRouter = Router();
 const appointmentsRepository = new AppointmentRepository();
 
 
-appointmentRouter.get('/', (request, response) =>{
+appointmentRouter.get('/', (request, response) => {
    const appointments = appointmentsRepository.findAll();
 
    return response.json(appointments);
@@ -26,10 +26,10 @@ appointmentRouter.post('/', (request, response) => {
          provider,
          date: parsedDate
       });
-      
+
       return response.json(appointment);
 
-   } catch(err) {
+   } catch (err) {
       return response.status(400).json({
          error: err.message
       });
