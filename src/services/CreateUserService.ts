@@ -14,7 +14,7 @@ class CreateUserService {
   public async execute({name, email, password}: RequestDTO): Promise<User> {
     const usersRepository = getRepository(User);
 
-    const checkUserExists = usersRepository.findOne({
+    const checkUserExists = await usersRepository.findOne({
       where: { email },
     });
 
