@@ -1,0 +1,17 @@
+{
+  "type": "db_service",
+  "host": "domain_to_access_it",
+  "port": 5432, 
+  "username": "user_name",
+  "password": "passwd",
+  "database": "db_name",
+  "entities": [
+     "./src/models/*.ts"
+  ],
+  "migrations": [
+     "./src/database/migrations/*.ts"
+  ],
+  "cli": {
+     "migrationsDir": "./src/database/migrations"
+  }
+}  
