@@ -1,10 +1,11 @@
 import path from 'path';
 import fs from 'fs';
 import { getRepository } from 'typeorm';
-
 import uploadConfig from '../config/upload';
+
+import AppError from '../errors/AppError';
+
 import User from '../models/User';
-import { response } from 'express';
 
 interface RequestDTO {
   user_id: string;
@@ -12,13 +13,13 @@ interface RequestDTO {
 }
 
 class UpdateUserAvatarService {
-  public async execute({ user_id, avatarFilename }: RequestDTO): Promise<User > {
+  public async execute({ user_id, avatarFilename }: RequestDTO): Promise<User> {
     const usersRepository = getRepository(User);
 
     const user = await usersRepository.findOne(user_id);
 
     if (!user) {
-      throw new Error('Only authenticated users can change avatar');
+      throw new AppError('Only authenticated users can change avatar', 401);
     }
 
     if (user.avatar) {
@@ -33,9 +34,8 @@ class UpdateUserAvatarService {
     user.avatar = avatarFilename;
 
     await usersRepository.save(user);
-    
-    return user; 
 
+    return user;
   }
 }
 
