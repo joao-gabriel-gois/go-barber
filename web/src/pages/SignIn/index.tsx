@@ -4,18 +4,27 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
-import Input from '../../components/Input';
-import Button from '../../components/Button';
 import { Container, Content, Background } from './styles';
 import getValidationErrors from '../../utils/getValidationErrors';
+import { useAuth } from '../../context/AuthContext';
 
 import logoImg from '../../assets/logo.svg';
+
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+
+interface SignInFormData {
+ email: string;
+ password: string;
+}
 
 const SignIn: React.FC = () => {
   
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback(async (data: object) => {
+  const { user, signIn } = useAuth();
+
+  const handleSubmit = useCallback(async ({ email, password }: SignInFormData) => {
     try {
       formRef.current?.setErrors({});
 
@@ -29,8 +38,13 @@ const SignIn: React.FC = () => {
           .required('Senha obrigatória'),
       });
 
-      await schema.validate(data, {
+      await schema.validate({ email, password }, {
         abortEarly: false,
+      });
+
+      signIn({
+        email,
+        password
       });
     } catch (err) {
       const errors = getValidationErrors(err);
