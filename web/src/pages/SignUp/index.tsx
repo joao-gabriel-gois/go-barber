@@ -7,11 +7,12 @@ import { Link } from 'react-router-dom';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
+import logoImg from '../../assets/logo.svg';
+
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import { Container, Content, Background } from './styles';
 
-import logoImg from '../../assets/logo.svg';
+import { Container, Content, AnimationContainer, Background } from './styles';
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
@@ -44,23 +45,25 @@ const SignUp: React.FC = () => {
     <Container>
       <Background />
       <Content>
-        <img src={logoImg} alt="Go Barber" />
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <h1>Faça seu cadastro</h1>
+        <AnimationContainer>
+          <img src={logoImg} alt="Go Barber" />
+          <Form ref={formRef} onSubmit={handleSubmit}>
+            <h1>Faça seu cadastro</h1>
 
-          <Input name="name" icon={FiUser} placeholder="Insira seu name" type="text" />
+            <Input name="name" icon={FiUser} placeholder="Insira seu name" type="text" />
 
-          <Input name="email" icon={FiMail} placeholder="Insira seu email" type="email" />
+            <Input name="email" icon={FiMail} placeholder="Insira seu email" type="email" />
 
-          <Input name="password" icon={FiLock} placeholder="Senha" type="password" />
+            <Input name="password" icon={FiLock} placeholder="Senha" type="password" />
 
-          <Button type="submit">Cadastrar</Button>
-        </Form>
+            <Button type="submit">Cadastrar</Button>
+          </Form>
 
-        <Link to="/">
-          <FiArrowLeft />
-          Voltar para login
-        </Link>
+          <Link to="/">
+            <FiArrowLeft />
+            Voltar para login
+          </Link>
+        </AnimationContainer>
       </Content>
     </Container>
   )
