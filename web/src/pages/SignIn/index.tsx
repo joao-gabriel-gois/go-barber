@@ -5,7 +5,6 @@ import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 
-
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 
@@ -34,8 +33,6 @@ const SignIn: React.FC = () => {
       formRef.current?.setErrors({});
 
       const schema = Yup.object().shape({
-        name: Yup.string()
-          .required('Nome obrigatório'),
         email: Yup.string()
           .required('Email é obrigatório')
           .email('Digite um email válido'),
@@ -51,6 +48,7 @@ const SignIn: React.FC = () => {
         email,
         password
       });
+      
     } catch (err) {
       if (err instanceof Yup.ValidationError) {  
         const errors = getValidationErrors(err);
