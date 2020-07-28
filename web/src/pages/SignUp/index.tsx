@@ -3,21 +3,32 @@ import { FiArrowLeft, FiMail, FiUser, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import api from '../../services/api';
 
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import logoImg from '../../assets/logo.svg';
+
+import { useToast } from '../../hooks/toast';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 import { Container, Content, AnimationContainer, Background } from './styles';
 
+interface SignUpFormData {
+  name: string;
+  email: string;
+  password: string;
+ }
+
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const history = useHistory();
+  const { addToast } = useToast();
 
-  const handleSubmit = useCallback(async (data: object) => {
+  const handleSubmit = useCallback(async ({ name, email, password }: SignUpFormData) => {
     try {
       formRef.current?.setErrors({});
 
@@ -31,15 +42,42 @@ const SignUp: React.FC = () => {
           .min(6, 'Necessário no mínimo 6 caracteres'),
       });
 
-      await schema.validate(data, {
+      await schema.validate({ name, email, password }, {
         abortEarly: false,
       });
-    } catch (err) {
-      const errors = getValidationErrors(err);
 
-      formRef.current?.setErrors(errors);
+      await api.post('/users', {
+        name,
+        email,
+        password
+      });
+
+      addToast({
+        type: 'success',
+        title: 'Usuário criado com sucesso',
+        description: 'Você já pode logar no GoBarber'
+      });
+
+      setTimeout(()=> {
+        history.push('/');
+      }, 2000);
+
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {  
+        const errors = getValidationErrors(err);
+
+        formRef.current?.setErrors(errors);
+
+        return;
+      }
+
+      addToast({
+        type: 'error',
+        title: 'Erro no cadastro',
+        description: 'Não foi possível realizar seu cadastro, tente novamente'
+      });
     }
-  }, []);
+  }, [history, addToast]);
 
   return (
     <Container>
