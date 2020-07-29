@@ -1,5 +1,12 @@
 import React from 'react';
-import { Image, KeyboardAvoidingView, Platform, Alert } from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  View,
+  Platform,
+  ScrollView,
+  Alert
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import Input from '../../components/Input';
@@ -24,20 +31,27 @@ const SignIn: React.FC = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         enabled
       >
-        <Container>
-          <Image source={logo} />
+        <ScrollView
+          keyboardShouldPersistTaps='handled'
+          contentContainerStyle={{ flex: 1 }}
+        >
+          <Container>
+            <Image source={logo} />
 
-          <Title>Faça seu login</Title>
+            <View>
+              <Title>Faça seu login</Title>
+            </View>
 
-          <Input name="email" icon="mail" placeholder="E-mail" />
-          <Input name="password" icon="lock" placeholder="Senha" />
+            <Input name="email" icon="mail" placeholder="E-mail" />
+            <Input name="password" icon="lock" placeholder="Senha" />
 
-          <Button onPress={() => {Alert.alert(`Sign In Button Pressed!`)}}>Entrar</Button>
+            <Button onPress={() => {Alert.alert(`Sign In Button Pressed!`)}}>Entrar</Button>
 
-          <ForgotPassword onPress={() => {Alert.alert('Forgot Password Button Pressed!')}}>
-            <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
-          </ForgotPassword>
-        </Container>
+            <ForgotPassword onPress={() => {Alert.alert('Forgot Password Button Pressed!')}}>
+              <ForgotPasswordText>Esqueci minha senha</ForgotPasswordText>
+            </ForgotPassword>
+          </Container>
+        </ScrollView>
       </KeyboardAvoidingView>
 
       <CreateAccountButton onPress={() => {
