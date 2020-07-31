@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import {
   Image,
   KeyboardAvoidingView,
@@ -12,6 +12,9 @@ import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
+import * as Yup from 'yup';
+
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -25,11 +28,53 @@ import {
   BackToSignInText
 } from './styles';
 
+interface SignInFormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null );
   const navigation = useNavigation();
+
+
+  const handleSingUp = useCallback(async ({ name, email, password }: SignInFormData) => {
+    try {
+      formRef.current?.setErrors({});
+
+      const schema = Yup.object().shape({
+        name: Yup.string().required('Nome obrigatório'),
+        email: Yup.string()
+          .required('Email é obrigatório')
+          .email('Digite um email válido'),
+        password: Yup.string()
+          .required('Senha obrigatória'),
+      });
+
+      await schema.validate({ email, password }, {
+        abortEarly: false,
+      });
+
+/*       await signIn({
+        email,
+        password
+      }); */
+
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err);
+
+        formRef.current?.setErrors(errors);
+
+        return;
+      }
+
+      Alert.alert('Cadastro Realizado!', 'Você já pode fazer seu Login no App GoBarber');
+    }
+  }, []);
 
   return (
     <>
@@ -50,9 +95,8 @@ const SignUp: React.FC = () => {
             </View>
             <Form
               ref={formRef}
-              onSubmit={(data) => {
-                Alert.alert(`Data: ${data.name} ${data.email} ${data.password}`)
-              }}>
+              onSubmit={handleSingUp}
+            >
 
               <Input
                 name="name"
