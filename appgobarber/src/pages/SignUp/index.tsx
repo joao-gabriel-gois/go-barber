@@ -14,6 +14,8 @@ import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 
+import api from '../../services/api';
+
 import getValidationErrors from '../../utils/getValidationErrors';
 
 import Input from '../../components/Input';
@@ -54,14 +56,19 @@ const SignUp: React.FC = () => {
           .required('Senha obrigatória'),
       });
 
-      await schema.validate({ email, password }, {
+      await schema.validate({ name, email, password }, {
         abortEarly: false,
       });
 
-/*       await signIn({
+      await api.post('/users', {
+        name,
         email,
         password
-      }); */
+      });
+
+      navigation.goBack();
+
+      Alert.alert('Cadastro Realizado!', 'Você já pode fazer seu Login no App GoBarber');
 
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
@@ -71,10 +78,11 @@ const SignUp: React.FC = () => {
 
         return;
       }
+      console.log(err, err.message);
 
-      Alert.alert('Cadastro Realizado!', 'Você já pode fazer seu Login no App GoBarber');
+      Alert.alert('Erro no cadastro', 'Ocorreu um erro ao fazer o cadastro, tente novamente.');
     }
-  }, []);
+  }, [navigation]);
 
   return (
     <>
