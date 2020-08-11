@@ -6,7 +6,7 @@ import IStorageProvider from "../models/IStorageProvider";
 
 // For CDN dealing, for now will only move to uploads directory
 
-class DiskStorageProvider implements IStorageProvider {
+export default class DiskStorageProvider implements IStorageProvider {
   public async saveFile(file: string): Promise<string> {
     await fs.promises.rename(
       path.resolve(uploadConfig.tmpDirectory, file),

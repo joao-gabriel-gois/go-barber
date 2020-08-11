@@ -23,7 +23,6 @@ class CreateUserService {
     ) {};
   
   public async execute({name, email, password}: IRequestDTO): Promise<User> {
-
     const checkUserExists = await this.usersRepository.findByEmail(email);
 
     if (checkUserExists) {
