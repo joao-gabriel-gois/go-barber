@@ -65,7 +65,7 @@ describe('PasswordReset', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it('Should be able to reset the password', async () => {
+  it('Should be able to reset the password if token has expired', async () => {
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -86,5 +86,4 @@ describe('PasswordReset', () => {
     })).rejects.toBeInstanceOf(AppError);
 
   });
-
 });;

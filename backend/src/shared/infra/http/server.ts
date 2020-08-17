@@ -15,7 +15,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use('/files', express.static(uploadConfig.directory));
+app.use('/files', express.static(uploadConfig.uploadsDirectory));
 app.use(routes);
 
 // criar exception handler e ver se importando e usando aqui funciona (provavelmente sim)
