@@ -28,13 +28,13 @@ describe('CreateUser', () => {
   it('Should not be able to create a new user when passing an existent email', async () => {
     await createUser.execute({
       name: 'John Doe',
-      email: 'jonhdoe@example.com',
+      email: 'johndoe@example.com',
       password: '123qwe321ewq',
     });
 
     await expect(createUser.execute({
       name: 'John Doe',
-      email: 'jonhdoe@example.com',
+      email: 'johndoe@example.com',
       password: '123qwe321ewq',
     })).rejects.toBeInstanceOf(AppError);
   })
