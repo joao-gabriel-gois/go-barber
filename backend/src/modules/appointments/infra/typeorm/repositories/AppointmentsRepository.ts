@@ -3,6 +3,7 @@ import { getRepository, Repository, Raw } from 'typeorm';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import ICreateAppointmentDTO from '@modules/appointments/DTOs/ICreateAppointmentDTO';
 import IFindMonthlyCalendarOfPoviderDTO from '@modules/appointments/DTOs/IFindMonthlyCalendarOfPoviderDTO';
+import IFindDailyCalendarOfPoviderDTO from '@modules/appointments/DTOs/IFindDailyCalendarOfPoviderDTO';
 
 
 import Appointment from "../entities/Appointment";
@@ -29,6 +30,27 @@ class AppointmentsRepository implements IAppointmentsRepository {
 
     return appointmentFound;
   }
+
+  public async findDailyCalendarOfProvider({
+    provider_id,
+    day,
+    month,
+    year
+  }: IFindDailyCalendarOfPoviderDTO): Promise<Appointment[]> {
+    const parsedDay = String(day).padStart(2, '0');
+    const parsedMonth = String(month).padStart(2, '0');
+    
+    const appointments = await this.ormRepository.find({
+      where: {
+        provider_id,
+        date: Raw((dateFieldName) =>
+        `to_char(${dateFieldName}, DD-MM-YYYY) = '${parsedDay}-${parsedMonth}-${year}'`)
+      }
+    });
+
+    return appointments;
+  }
+  
   public async findMonthlyCalendarOfProvider({
     provider_id,
     month,
@@ -44,9 +66,8 @@ class AppointmentsRepository implements IAppointmentsRepository {
       }
     });
 
-
-  return appointments;
-}
+    return appointments;
+  }
 
 }
 

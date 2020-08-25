@@ -18,7 +18,7 @@ type IResponse = Array<{
 class ListProviderMonthlyAvailabilityService {
   constructor(
     @inject('AppointmentsRepository')
-    private appointmentsRepository: IAppointmentsRepository;
+    private appointmentsRepository: IAppointmentsRepository,
   ) {};
 
   public async execute({ provider_id, month, year }: IRequestDTO): Promise<IResponse> {
@@ -43,8 +43,8 @@ class ListProviderMonthlyAvailabilityService {
       return {
         day,
         available: appointmentsInDay.length < 10,
-      }
-    })
+      };
+    });
     
     return availability;
   }
