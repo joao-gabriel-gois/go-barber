@@ -64,8 +64,8 @@
 
 **Business logic**
 
+* [x] User can't schedule in an occupied hour;
+* [x] User can't schedule in a past hour from his current clock;
+* [x] User can't schedule schedule appointments with him/herself;
 * [ ] Each appointment should lasts exactly one hour;
 * [ ] All Appointments should be available betwen 8am until 18pm (first 8am, last 17pm);
-* [ ] User can't schedule in an occupied hour;
-* [ ] User can't schedule in a past hour from his current clock;
-* [ ] User can't schedule schedule appointments with him/herself;
