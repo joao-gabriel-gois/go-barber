@@ -1,12 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import mime from 'mime';
-import aws, { S3 } from 'aws-sdk'; // AMAZON CDN PROVIDER!
+import aws, { S3 } from 'aws-sdk';
 import uploadConfig from '@config/upload';
 
 import IStorageProvider from "../models/IStorageProvider";
-
-// For CDN dealing, for now will only move to uploads directory
 
 export default class DiskStorageProvider implements IStorageProvider {
   private client: S3;
