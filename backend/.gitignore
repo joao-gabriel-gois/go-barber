@@ -4,4 +4,6 @@ tmp/*
 !tmp/.gitkeep
 yarn.lock
 yarn-error.log
-test-coverage/Icov-report/*
+test-coverage
+.env
+.vscode

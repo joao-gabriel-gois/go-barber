@@ -1,15 +1,21 @@
 import AppError from '@shared/errors/AppError';
 
+import FakeNotificationsRepository from '@modules/notifications/repositories/fakes/FakeNotificationsRepository';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import CreateAppointmentService from './CreateAppointmentService';
 
+let fakeNotificationsRepository: FakeNotificationsRepository;
 let fakeAppointmentsRepository: FakeAppointmentsRepository;
 let createAppointmentService: CreateAppointmentService;
 
 describe('CreateAppointment', () => {
   beforeEach(() => {
+    fakeNotificationsRepository = new FakeNotificationsRepository();
     fakeAppointmentsRepository = new FakeAppointmentsRepository();
-    createAppointmentService = new CreateAppointmentService(fakeAppointmentsRepository);
+    createAppointmentService = new CreateAppointmentService(
+      fakeAppointmentsRepository,
+      fakeNotificationsRepository
+    );
   });
 
   it('Should be able to create a new appointment', async () => {
@@ -22,6 +28,7 @@ describe('CreateAppointment', () => {
       user_id: 'fake-user-id',
       provider_id: 'fake-provider-id',
     });
+    
 
     expect(appointment).toHaveProperty('id');
     expect(appointment.provider_id).toBe('fake-provider-id');

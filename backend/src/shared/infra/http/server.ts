@@ -1,7 +1,9 @@
 import 'reflect-metadata';
+import 'dotenv/config';
 
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import { errors } from 'celebrate';
 import 'express-async-errors';
 
 import uploadConfig from '@config/upload';
@@ -17,6 +19,8 @@ app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.uploadsDirectory));
 app.use(routes);
+
+app.use(errors())
 
 // criar exception handler e ver se importando e usando aqui funciona (provavelmente sim)
 app.use((error: Error, request: Request, response: Response, next: NextFunction) => {

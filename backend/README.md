@@ -67,5 +67,5 @@
 * [x] User can't schedule in an occupied hour;
 * [x] User can't schedule in a past hour from his current clock;
 * [x] User can't schedule schedule appointments with him/herself;
+* [x] All Appointments should be available betwen 8am until 18pm (first 8am, last 17pm);
 * [ ] Each appointment should lasts exactly one hour;
-* [ ] All Appointments should be available betwen 8am until 18pm (first 8am, last 17pm);

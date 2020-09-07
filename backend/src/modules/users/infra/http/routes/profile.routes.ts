@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { celebrate, Segments, Joi } from 'celebrate';
 
 import ensureAuthentication from '../middlewares/ensureAuthentication';
 
@@ -10,6 +11,17 @@ const profileController = new ProfileController();
 profileRouter.use(ensureAuthentication);
 
 profileRouter.get('/', profileController.show);
-profileRouter.put('/', profileController.update);
+profileRouter.put('/',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+      new_password: Joi.string(),
+      password: Joi.string(),
+      password_confirmation: Joi.string().valid(Joi.ref('password')),
+    },
+  }),
+  profileController.update,
+);
 
 export default profileRouter;
