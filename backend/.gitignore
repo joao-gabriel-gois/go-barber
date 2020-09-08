@@ -2,7 +2,6 @@ node_modules
 ormconfig.json
 tmp/*
 !tmp/.gitkeep
-yarn.lock
 yarn-error.log
 test-coverage
 .env
