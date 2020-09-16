@@ -2,8 +2,8 @@ import { getRepository, Repository, Raw } from 'typeorm';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import ICreateAppointmentDTO from '@modules/appointments/DTOs/ICreateAppointmentDTO';
-import IFindMonthlyCalendarOfPoviderDTO from '@modules/appointments/DTOs/IFindMonthlyCalendarOfPoviderDTO';
-import IFindDailyCalendarOfPoviderDTO from '@modules/appointments/DTOs/IFindDailyCalendarOfPoviderDTO';
+import IFindMonthlyCalendarOfPoviderDTO from '@modules/appointments/DTOs/IFindMonthlyCalendarOfProviderDTO';
+import IFindDailyCalendarOfPoviderDTO from '@modules/appointments/DTOs/IFindDailyCalendarOfProviderDTO';
 
 
 import Appointment from "../entities/Appointment";
@@ -23,9 +23,9 @@ class AppointmentsRepository implements IAppointmentsRepository {
       return appointment;
    }
 
-  public async findByDate(date: Date): Promise<Appointment | undefined> {
+  public async findByDate(date: Date, provider_id: string): Promise<Appointment | undefined> {
     const appointmentFound = await this.ormRepository.findOne({
-        where: { date }
+        where: { date, provider_id },
     })
 
     return appointmentFound;
@@ -43,9 +43,12 @@ class AppointmentsRepository implements IAppointmentsRepository {
     const appointments = await this.ormRepository.find({
       where: {
         provider_id,
-        date: Raw((dateFieldName) =>
-        `to_char(${dateFieldName}, DD-MM-YYYY) = '${parsedDay}-${parsedMonth}-${year}'`)
-      }
+        date: Raw(
+          dateFieldName =>
+            `to_char(${dateFieldName}, 'DD-MM-YYYY' ) = '${parsedDay}-${parsedMonth}-${year}'`,
+        ),
+      },
+      relations: ['user'],
     });
 
     return appointments;
@@ -62,7 +65,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
       where: {
         provider_id,
         date: Raw((dateFieldName) =>
-        `to_char(${dateFieldName}, MM-YYYY) = '${parsedMonth}-${year}'`)
+        `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`)
       }
     });
 

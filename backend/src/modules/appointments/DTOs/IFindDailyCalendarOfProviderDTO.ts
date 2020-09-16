@@ -1,4 +1,4 @@
-export default interface IFindMonthlyCalendarOfProviderDTO {
+export default interface IFindDailyCalendarOfProviderDTO {
   provider_id: string;
   day: number;
   month: number;

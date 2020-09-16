@@ -7,6 +7,7 @@ import IFindMonthlyCalendarOfPoviderDTO from '@modules/appointments/DTOs/IFindMo
 import IFindDailyCalendarOfPoviderDTO from '@modules/appointments/DTOs/IFindDailyCalendarOfProviderDTO';
 
 import Appointment from "@modules/appointments/infra/typeorm/entities/Appointment";
+import appointmentsRouter from '@modules/appointments/infra/http/routes/appointments.routes';
 
 class AppointmentsRepository implements IAppointmentsRepository {
   private appointments: Appointment[] = [];
@@ -26,8 +27,13 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return appointment;
   }
 
-  public async findByDate(date: Date): Promise<Appointment | undefined> {
-    const appointmentFound = this.appointments.find(appointment => isEqual(appointment.date, date));
+  public async findByDate(date: Date, provider_id: string): Promise<Appointment | undefined> {
+    const appointmentFound = this.appointments.find(
+      appointment => (
+        isEqual(appointment.date, date) &&
+        appointment.provider_id === provider_id
+      ),
+    );
     
     return appointmentFound;
   }
