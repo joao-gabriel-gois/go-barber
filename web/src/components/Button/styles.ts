@@ -15,4 +15,14 @@ export const Container = styled.button`
   &:hover {
     background: ${shade(0.2, '#FF9000')}
   }
+
+  svg {
+    animation: rotation 2.7s linear infinite;
+  }
+
+  @keyframes rotation {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 `;

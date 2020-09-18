@@ -24,6 +24,7 @@ export const Container = styled.div<ContainerProps>`
 
   ${props => props.hasErrors && css`
     color: #C53030;
+    border-color: #C53030;
   `}
 
   ${props => props.isFocused && css`

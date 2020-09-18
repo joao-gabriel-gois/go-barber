@@ -11,6 +11,7 @@ import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 interface IRequestDTO {
   token: string;
   password: string;
+  password_confirmation: string;
 }
 
 @injectable()
@@ -26,11 +27,15 @@ class ResetPasswordService {
     private hashProvider: IHashProvider,
   ) {};
   
-  public async execute({ token, password }: IRequestDTO): Promise<void> {
+  public async execute({ token, password, password_confirmation }: IRequestDTO): Promise<void> {
     const userToken = await this.userTokenRepository.findByToken(token);
     
     if (!userToken) {
       throw new AppError('User Token does not exists');
+    }
+
+    if (password_confirmation !== password) {
+      throw new AppError('Tried to set password without confirm it')
     }
     
     const user = await this.usersRepository.findById(userToken.user_id);

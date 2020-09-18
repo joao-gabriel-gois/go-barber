@@ -1,5 +1,10 @@
 import React, { useEffect } from 'react';
-import { FiAlertCircle, FiXCircle, FiCheckCircle, FiInfo } from 'react-icons/fi';
+import {
+  FiAlertCircle,
+  FiXCircle,
+  FiCheckCircle,
+  FiInfo,
+} from 'react-icons/fi';
 
 import { ToastMessage, useToast } from '../../../hooks/toast';
 
@@ -32,7 +37,7 @@ const Toast: React.FC<ToastProps> = ({ message, style }) => {
   return (
     <Container 
       type={message.type}
-      hasDescription={!!message.description}
+      hasDescription={Number(!!message.description)}
       style={style}
     >
       { icons[message.type || 'info'] }

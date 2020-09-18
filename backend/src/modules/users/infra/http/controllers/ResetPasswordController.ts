@@ -5,12 +5,13 @@ import ResetPasswordService from '@modules/users/services/ResetPasswordService';
 
 export default class ForgotPasswordController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { password, token } = request.body;
+    const { password_confirmation, password, token } = request.body;
 
     const resetPassword = container.resolve(ResetPasswordService);
   
     await resetPassword.execute({
       password,
+      password_confirmation,
       token
     });
   
