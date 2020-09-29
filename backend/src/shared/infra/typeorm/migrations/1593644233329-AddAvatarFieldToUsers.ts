@@ -6,7 +6,7 @@ export default class AddAvatarFieldToUsers1593644233329 implements MigrationInte
         await queryRunner.addColumn('users', new TableColumn({
             name: 'avatar',
             type: 'varchar',
-            isNullable: true //new column, need it nullable to deal with old users
+            isNullable: true, //new column, need it nullable to deal with old users
         }));
     }
 

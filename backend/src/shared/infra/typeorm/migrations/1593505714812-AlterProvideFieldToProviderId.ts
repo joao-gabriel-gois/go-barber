@@ -34,7 +34,7 @@ export default class AlterProvideFieldToProviderId1593505714812 implements Migra
 
     await queryRunner.addColumn('appointments', new TableColumn({
       name: 'provider',
-      type: 'varchar'
+      type: 'varchar',
     }))
   }
 
