@@ -3,8 +3,9 @@ import api from '../services/api';
 
 interface User {
   id: string;
-  avatar_url: string;
   name: string;
+  email: string;
+  avatar_url: string;
 }
 interface AuthDataState {
   token: string;
@@ -20,6 +21,7 @@ interface AuthContextData {
   user: User;
   signIn(credentials: SignInCretendtials): Promise<void>;
   signOut(): void;
+  updateUser(user: User): void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -66,8 +68,17 @@ const AuthProvider: React.FC = ({ children }) => {
     setAuthData({} as AuthDataState);
   }, []);
 
+  const updateUser = useCallback((user: User) => {
+    localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+    
+    setAuthData({
+      token: authData.token,
+      user,
+    });
+  }, [setAuthData, authData.token]);
+
   return (
-    <AuthContext.Provider value={{ user: authData.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: authData.user, signIn, signOut, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
