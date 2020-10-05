@@ -102,12 +102,26 @@ const Profile: React.FC = () => {
           return;
         }
 
-        console.log(err.message);
+        const statusCode = err.message.split('code ')[1] === '401';
+
+        if (statusCode) {
+          formRef.current?.setErrors({
+            password: 'Senha incorreta',
+          });
+
+          addToast({
+            type: 'error',
+            title: 'Erro na atualização',
+            description: 'A senha informada está incorreta. Tente novamente preenchendo o campo referente a senha antiga corretamente.',
+          });
+
+          return;
+        }
 
         addToast({
           type: 'error',
           title: 'Erro na atualização',
-          description: 'Não foi possível realizar a atualização de seu perfil, verifique se utilizou a senha correta. Tente novamente.',
+          description: 'Não foi possível realizar a atualização de seu perfil. Tente novamente mais tarde.',
         });
       }
     }
@@ -128,8 +142,6 @@ const Profile: React.FC = () => {
             title: 'Foto de perfil atualizada!',
             description: 'Agora você já está utilizando a nova foto de perfil',
           })
-
-          console.log(response ? `Response ${response}` : 'No content');
         }).catch(error => {
           addToast({
             type: 'error',
