@@ -1,9 +1,0 @@
-{
-   "eslint.workingDirectories": [
-      "./backend", 
-      "./frontend",
-      "./web",
-      "./mobile"
-  ],
-   "eslint.format.enable": true
-}

@@ -8,9 +8,16 @@ import React, {
 import api from '../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatar_url: string;
+}
+
 interface AuthDataState {
   token: string;
-  user: object;
+  user: User;
 }
 
 interface SignInCretendtials {
@@ -19,7 +26,7 @@ interface SignInCretendtials {
 }
 
 interface AuthContextData {
-  user: object;
+  user: User;
   loading: boolean;
   signIn(credentials: SignInCretendtials): Promise<void>;
   signOut(): void;
@@ -39,6 +46,8 @@ const AuthProvider: React.FC = ({ children }) => {
       ]); // return an array of key-value pair arrays
 
       if (currentToken[1] && currentUser[1]) {
+        api.defaults.headers.authorization = `Bearer ${currentToken[1]}`;
+
         setAuthData({
           token: currentToken[1],
           user: JSON.parse(currentUser[1]),
@@ -63,6 +72,8 @@ const AuthProvider: React.FC = ({ children }) => {
       ['@GoBarber:token', token],
       ['@GoBarber:user', JSON.stringify(user)]
     ]);
+
+    api.defaults.headers.authorization = `Bearer ${token}`;
 
     setAuthData({ token, user });
   }, [])
