@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { Provider } from './types';
+import { Provider } from '../types';
 
 import api from '../../services/api';
 
@@ -68,16 +68,18 @@ const Dashboard: React.FC = () => {
           <ProvidersListTitle>Cabeleireiros</ProvidersListTitle>
         }
         renderItem={({ item: provider }) => (
-          <ProviderContainer onPress={() => { navigateToAppointmentCreation(provider.id)}}>
+          <ProviderContainer onPress={() => navigateToAppointmentCreation(provider.id)}>
             <ProviderAvatar source={{ uri: provider.avatar_url }} />
             <ProviderInfo>
               <ProviderName>{provider.name}</ProviderName>
 
               <ProviderAvailability>
-                <Icon name="calendar" size={14} color="#FF900" />
+                <Icon name="calendar" size={14} color="#FF9000" />
                 <ProviderAvailabilityText>Segunda à Sexta</ProviderAvailabilityText>
+              </ProviderAvailability>
 
-                <Icon name="clock" size={14} color="#FF900" />
+              <ProviderAvailability>
+                <Icon name="clock" size={14} color="#FF9000" />
                 <ProviderAvailabilityText>Das 8h às 18h</ProviderAvailabilityText>
               </ProviderAvailability>
             </ProviderInfo>

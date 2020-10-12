@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
-import { Provider } from './types';
+import { Provider } from '../types';
 
 export const Container = styled.View`
   flex: 1;
@@ -42,7 +42,7 @@ export const UserAvatar = styled.Image`
 export const ProvidersListTitle = styled.Text`
   font-size: 24px;
   margin-bottom: 24px;
-  color: ##F4EDE8;
+  color: #F4EDE8;
   font-family: 'RobotoSlab-Medium';
 `;
 
