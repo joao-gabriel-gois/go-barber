@@ -12,15 +12,15 @@ export const Title = styled.Text`
   font-size: 32px;
   color: #F4EDE8;
   font-family: 'RobotoSlab-Medium';
-  margin-top: 48px;
+  margin-top: 28px;
   text-align: center;
 `;
 
 export const Description = styled.Text`
   font-family: 'RobotoSlab-Regular';
-  font-size: 18px;
+  font-size: 15px;
   color: #999591;
-  margin-top: 16px;
+  margin-top: 24px;
 `;
 
 export const OkButton = styled(RectButton)`
@@ -28,7 +28,7 @@ export const OkButton = styled(RectButton)`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  margin-top: 24px;
+  margin-top: 48px;
   padding: 12px 24px;
 `;
 

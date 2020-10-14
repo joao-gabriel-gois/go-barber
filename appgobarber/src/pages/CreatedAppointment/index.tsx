@@ -33,11 +33,19 @@ const CreatedAppointment: React.FC = () => {
   }, [reset]);
 
   const formattedDate = useMemo(() => {
-    return format(
+    const rawFormattedDate = format(
       routeParams.date,
-      "EEEE', dia' dd 'de' MMMM 'de' yyyy 'às' HH:mm'h'",
+      "EEEE', dia' dd 'de' MMMM 'de' yyyy', às' HH:mm'h'",
       { locale: ptBr },
-    )
+    );
+
+    // Captilizing week day
+    const formattedDateChars = rawFormattedDate.split('');
+    formattedDateChars[0] = formattedDateChars[0].toUpperCase();
+    const finalFormattedDate = formattedDateChars.join('');
+
+    return finalFormattedDate;
+
   }, [])
 
   return (
@@ -46,10 +54,10 @@ const CreatedAppointment: React.FC = () => {
 
       <Title>Agendamento Concluído</Title>
 
-      <Description>Descrição bla bla bla</Description>
+      <Description>{formattedDate}</Description>
 
       <OkButton onPress={handleOkPressed}>
-        <OkButtonText>Ok</OkButtonText>
+        <OkButtonText>OK</OkButtonText>
       </OkButton>
     </Container>
   )

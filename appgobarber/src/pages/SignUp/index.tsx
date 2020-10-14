@@ -43,7 +43,7 @@ const SignUp: React.FC = () => {
   const navigation = useNavigation();
 
 
-  const handleSingUp = useCallback(async ({ name, email, password }: SignInFormData) => {
+  const handleSignUp = useCallback(async ({ name, email, password }: SignInFormData) => {
     try {
       formRef.current?.setErrors({});
 
@@ -103,7 +103,7 @@ const SignUp: React.FC = () => {
             </View>
             <Form
               ref={formRef}
-              onSubmit={handleSingUp}
+              onSubmit={handleSignUp}
             >
 
               <Input
