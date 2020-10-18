@@ -29,6 +29,8 @@ import {
   UserAvatarButton,
   UserAvatar,
   BackButton,
+  LogOut,
+  LogOutText,
 } from './styles';
 
 interface ProfileFormData {
@@ -40,7 +42,7 @@ interface ProfileFormData {
 }
 
 const Profile: React.FC = () => {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, signOut } = useAuth();
 
   const formRef = useRef<FormHandles>(null);
   const emailInputRef = useRef<TextInput>(null);
@@ -268,7 +270,10 @@ const Profile: React.FC = () => {
               Confirmar mudanças
             </Button>
           </Form>
-
+          <LogOut onPress={signOut}>
+            <Icon name="x-circle" size={20} color="#FF9000" />
+            <LogOutText>Sair do GoBarber</LogOutText>
+          </LogOut>
         </Container>
       </ScrollView>
     </KeyboardAvoidingView>

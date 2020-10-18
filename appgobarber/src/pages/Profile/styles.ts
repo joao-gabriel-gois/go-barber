@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { Platform } from 'react-native';
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 export const Container = styled.View`
   flex:1;
@@ -31,5 +32,24 @@ export const UserAvatar = styled.Image`
   align-self: center;
 `;
 
+export const LogOut = styled.TouchableOpacity`
+  position:absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #312E38;
+  border-top-width: 1px;
+  border-color: #322129;
+  padding: 16px 0 ${16 + getBottomSpace()}px;
 
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+`;
 
+export const LogOutText = styled.Text`
+  margin-left: 8px;
+  color: #FF8B10;
+  font-size: 18px;
+  font-family: 'RobotoSlab-Regular';
+`;
