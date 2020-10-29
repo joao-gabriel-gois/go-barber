@@ -125,7 +125,7 @@ const Profile: React.FC = () => {
         });
       }
     }
-  , [history, addToast]);
+  , [history, addToast, updateUser]);
 
   const handleAvatarChange = useCallback(async (event: ChangeEvent<HTMLInputElement>) => { 
     if (event.target.files) {
