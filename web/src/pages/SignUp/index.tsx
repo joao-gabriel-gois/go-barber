@@ -21,7 +21,7 @@ interface SignUpFormData {
   name: string;
   email: string;
   password: string;
- }
+}
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
@@ -58,9 +58,7 @@ const SignUp: React.FC = () => {
         description: 'Você já pode logar no GoBarber'
       });
 
-      setTimeout(()=> {
-        history.push('/');
-      }, 2000);
+      history.push('/');      
 
     } catch (err) {
       if (err instanceof Yup.ValidationError) {  
@@ -88,7 +86,7 @@ const SignUp: React.FC = () => {
           <Form ref={formRef} onSubmit={handleSubmit}>
             <h1>Faça seu cadastro</h1>
 
-            <Input name="name" icon={FiUser} placeholder="Insira seu name" type="text" />
+            <Input name="name" icon={FiUser} placeholder="Insira seu nome" type="text" />
 
             <Input name="email" icon={FiMail} placeholder="Insira seu email" type="email" />
 
