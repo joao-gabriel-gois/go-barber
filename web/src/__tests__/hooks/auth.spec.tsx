@@ -1,4 +1,3 @@
-import React from 'react';
 import { renderHook, act } from '@testing-library/react-hooks';
 import { AuthProvider, useAuth } from '../../hooks/auth';
 import MockAdapter from 'axios-mock-adapter';
@@ -78,7 +77,7 @@ describe('Auth hook', () => {
 
     const removeItemSpy = jest.spyOn(Storage.prototype, 'removeItem');
 
-    const { result, waitForNextUpdate } = renderHook(() => useAuth(), {
+    const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     });
 

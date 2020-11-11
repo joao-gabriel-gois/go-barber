@@ -7,7 +7,6 @@ import api from '../../services/api';
 const apiMock = new MockAdapter(api);
 
 const mockedHistoryPush = jest.fn();
-const mockedSignUp = jest.fn();
 const mockedAddToast = jest.fn();
 
 jest.mock('react-router-dom', () => {

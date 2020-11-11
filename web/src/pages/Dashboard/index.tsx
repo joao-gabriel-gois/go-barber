@@ -72,7 +72,7 @@ const Dashboard: React.FC = () => {
   }, [currentMonth, user.id]);
 
   useEffect(() => {
-    api.get<Appointment[]>('/appointments/current-provider', {
+    api.get<Appointment[]>('appointments/current-provider', {
       params: {
         year: selectedDate.getFullYear(),
         month: selectedDate.getMonth() + 1,
@@ -148,6 +148,7 @@ const Dashboard: React.FC = () => {
           <button
             onClick={signOut}
             type="button"
+            data-testid="logout-button"
           >
             <FiPower />
           </button>
@@ -181,11 +182,13 @@ const Dashboard: React.FC = () => {
             <strong>Manhã</strong>
 
             {morningAppointments.length === 0 && (
-              <p>Nenhum agendamento neste período</p>
+              <p data-testid="no-morning-appointment">Nenhum agendamento neste período</p>
             )}
 
             {morningAppointments.map(appointment => (
-              <Appointment key={appointment.id}>
+              <Appointment
+                key={appointment.id}
+              >
                 <span>
                   <FiClock />
                   {appointment.formattedHour}
@@ -195,7 +198,11 @@ const Dashboard: React.FC = () => {
                     src={appointment.user.avatar_url}
                     alt={appointment.user.name}
                   /> 
-                  <strong>{appointment.user.name}</strong>
+                  <strong
+                    data-testid="appointment-list-item"
+                  >
+                    {appointment.user.name}
+                  </strong>
                 </div>
               </Appointment>
             ))}
